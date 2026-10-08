@@ -1,19 +1,42 @@
 import { prisma } from "../database/client";
 
-import type { CreateCarDto } from "../dto/car/createCarDto";
-import type { UpdateCarDto } from "../dto/car/updateCarDto";
+import type { CreateCarDto } from "../dto/car/createCarDto.ts";
+import type { UpdateCarDto } from "../dto/car/updateCarDto.ts";
 
-// Cria um novo carro na tabela
-export function create(data: any) {}
+// Lista todos os carros, ordenados pela marca
+export function findAll() {
+  return prisma.car.findMany({
+    orderBy: {
+      brand: "asc",
+    },
+  });
+}
 
-// Encontra um carro na tabela por seu id
-export function findById(id: number) {}
+// Encontra um carro pelo seu ID
+export function findById(id: number) {
+  return prisma.car.findUnique({
+    where: { id },
+  });
+}
 
-// Lista todos os carros da tabela
-export function findAll() {}
+// Cadastra um novo carro
+export function create(data: CreateCarDto) {
+  return prisma.car.create({
+    data,
+  });
+}
 
-// Atualiza os dados de um carro, buscando-o pelo id
-export function updateById(id: number, data: any) {}
+// Atualiza os dados de um carro pelo ID
+export function update(id: number, data: UpdateCarDto) {
+  return prisma.car.update({
+    where: { id },
+    data,
+  });
+}
 
-// Exclui um carro da tabela, buscando-o por seu id
-export function deleteByid(id: number) {}
+// Exclui um carro pelo ID
+export function remove(id: number) {
+  return prisma.car.delete({
+    where: { id },
+  });
+}
