@@ -11,9 +11,15 @@ import cors from "cors";
 
 const app = express();
 
+const allowedOrigins = process.env.ALLOWED_ORIGINS;
+
+if (!allowedOrigins) {
+  throw new Error("ALLOWED_ORIGINS não foi definida no arquivo .env");
+}
+
 app.use(
   cors({
-    origin: process.env.ALLOWED_ORIGINS.split(","),
+    origin: allowedOrigins.split(","),
   }),
 );
 
